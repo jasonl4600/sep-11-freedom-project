@@ -29,6 +29,44 @@ add([
 * I also tinkered by changing the key to jump instead of having space as the key I changed it to w
 * Another thing I tinkered with is an ai element where you have an enemy that follows you and shoots you every so often which would kill you.
 * I tinkered by changing some values and aspects of the entity making it faster and the bullets it shoots more accurate making it smarter and stronger.
+---
+12/3/23
+Learning more elements in Kaboom
+Kaboom introduces many components that can all be paired up with each other, so far during the work time I've spent on Monday this is what I learned
+---
+Platforms:
+* Without a platform if you have a sprite that contains the body() component your sprite will have a physical body and without any platform it will keep falling.
+* rect() renders a rectangle that accepts two arguments which include the width and height
+* pos() meaning position can be given an x and y value like on a graph but in this case positioning the rectangle
+* outline() self explanatory it assigns an outline to what you assign it with with a number like 4 being an outline of 4 pixels
+* area() like body() but instead it gives something like a rectangle or whatever element it is a physical body which allows collisions with things like your sprite
+* body({ isStatic: true }) What this does is makes the platform a static object meaning it doesn't move and that everything that doesn't move won't move past it either
+* color(x, x, x) uses the RGB color system to assign colors to your platform or anything
+
+
+add([
+    rect(width(), 48),
+    pos(0, height() - 48),
+    outline(4),
+    area(),
+    body({ isStatic: true }),
+    color(127, 200, 255),
+])
+
+Code here creates a platform using  all those components that is static in place and collideable with other physical elements like your sprite.
+---
+Condtions:
+* Using an if statement we can create a condition where the sprite can only jump when it's grounded on the given platform
+* We can use the component onKeyPress with an if statement where if that key is pressed the if statement will be ran
+* onKeyPress("space", () => {
+    if (bean.isGrounded()) {
+        bean.jump();
+    }
+});
+* Code above tells us that in the " " of onKeyPress is the key input
+* The if statement runs the condition bean.isGrounded isGrounded is a function in the category of body that checks if the sprite is on a platform
+* Now that the conditions are met it will run bean.jump(); which basically just allows the sprite to jump
+---
 
 X/X/X:
 * Text
