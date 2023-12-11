@@ -67,6 +67,19 @@ Condtions:
 * The if statement runs the condition bean.isGrounded isGrounded is a function in the category of body that checks if the sprite is on a platform
 * Now that the conditions are met it will run bean.jump(); which basically just allows the sprite to jump
 ---
+12/10/23
+* I watched a [video on a basic flappy bird tutorial](https://www.youtube.com/watch?v=hgReGsh5xVU&ab_channel=Replit) for roughly around 10 minutes today.
+* I found out that instead of using my ide, I can use [replit](https://replit.com/) where kaboom is fully built in whereas using my ide I can only use the cdn link of Kaboomjs which I'm pretty sure is limited
+* Tinkering a bit on the usage of Kaboom on Replit I found out you can customize, create, and search up sprites making it very accessible for the usage of making a game.
+* Watching the video I now understand how width and height works more now that the Kaboom website didn't explain
+```js
+add([
+    sprite("image", {width: width(), height: height()})
+]);
+```
+This is the code used to create a background. What I didn't understand about width and height is how width: width() and height: height() works without numbers. It's just blank so what does it do? The video explains that if it's blank like that with paranthesis then it takes up the whole screen which is useful for adding something like a background.
+
+I tip I also learned is that in the case of adding sprites they topple over each other so if you had a character and a background you want to add the background first and the character sprite next so the character sprite is "on top" of the background sprite. Basically so it overlays the background.
 
 X/X/X:
 * Text
