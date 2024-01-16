@@ -81,6 +81,25 @@ This is the code used to create a background. What I didn't understand about wid
 
 I tip I also learned is that in the case of adding sprites they topple over each other so if you had a character and a background you want to add the background first and the character sprite next so the character sprite is "on top" of the background sprite. Basically so it overlays the background.
 
+1/15/24
+
+* Watched this [video](https://www.youtube.com/watch?v=4OaHB0JbJDI&t=2623s) on youtube for 20 minutes on just general components that can be used to make games on Kaboom
+* Learned a new component addLevel() that allows you to create kind of a map layout for your game
+```js
+addLevel([
+  "                                  ",
+  "                                  ",
+  "       @                          ",
+  "                 ==               ",
+  "                                  ",
+  "===========================       "
+])
+```
+* At first I didn't know what any of those symbols meant but after some more research I found out that " or ' being interchangeable are simply just spaces in the level that don't have anything in them like a block. 
+* Your sprite/character is defined by the character @ which is placed wherever you want as long as it's in an empty space
+* Finally == or xx being interchangeable as well represents a tile or the ground of your game which can be made into anything you want look wise as you can incorporate the ground tiles with sprites allowing you to make something like a grass block as the tile
+* In the tile component you can also assign te component "solid" to make it an actual existing ground that a body wouldn't fall through as they technically are just placeholders that take up the layout until you assign something to it
+
 X/X/X:
 * Text
 
