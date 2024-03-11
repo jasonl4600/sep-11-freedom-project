@@ -156,7 +156,7 @@ addLevel([
 * As you can see in the first set of code above everything is the same besides width, height, and solid compared to the 2nd set of code. This is because the component addLevel() and element solid are done differently and removed where you define height and width as tileheight/width and solid just being removed in general.
 
 * This was a big issue for a while because the documentation on kaboom still uses height, width, and solid for the component addLevel() and nowhere does it mention these elements being removed unless you check the blog section with updates concerning the new version of kaboom.
-* Now that I fixed a huge problem I have created a level and can use this important component to continue ith my full game.
+* Now that I fixed a huge problem I have created a level and can use this important component to continue with my full game.
 
 
 
