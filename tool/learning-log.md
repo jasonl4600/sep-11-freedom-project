@@ -6,7 +6,7 @@ Project: **Fate Platformer**
 
 ---
 
-10/29/23:
+## 10/29/23:
 * First I set up Kaboom by using the CDN, I simply did this by going to the setup document and pasting this into a index.html file I created for testing Kaboom:
 ``` js 
 <script type="module">
@@ -30,7 +30,7 @@ add([
 * Another thing I tinkered with is an ai element where you have an enemy that follows you and shoots you every so often which would kill you.
 * I tinkered by changing some values and aspects of the entity making it faster and the bullets it shoots more accurate making it smarter and stronger.
 ---
-12/3/23
+## 12/3/23
 Learning more elements in Kaboom
 Kaboom introduces many components that can all be paired up with each other, so far during the work time I've spent on Monday this is what I learned
 ---
@@ -67,7 +67,7 @@ Condtions:
 * The if statement runs the condition bean.isGrounded isGrounded is a function in the category of body that checks if the sprite is on a platform
 * Now that the conditions are met it will run bean.jump(); which basically just allows the sprite to jump
 ---
-12/10/23
+## 12/10/23
 * I watched a [video on a basic flappy bird tutorial](https://www.youtube.com/watch?v=hgReGsh5xVU&ab_channel=Replit) for roughly around 10 minutes today.
 * I found out that instead of using my ide, I can use [replit](https://replit.com/) where kaboom is fully built in whereas using my ide I can only use the cdn link of Kaboomjs which I'm pretty sure is limited
 * Tinkering a bit on the usage of Kaboom on Replit I found out you can customize, create, and search up sprites making it very accessible for the usage of making a game.
@@ -81,7 +81,7 @@ This is the code used to create a background. What I didn't understand about wid
 
 I tip I also learned is that in the case of adding sprites they topple over each other so if you had a character and a background you want to add the background first and the character sprite next so the character sprite is "on top" of the background sprite. Basically so it overlays the background.
 
-1/15/24
+## 1/15/24
 
 * Watched this [video](https://www.youtube.com/watch?v=4OaHB0JbJDI&t=2623s) on youtube for 20 minutes on just general components that can be used to make games on Kaboom
 * Learned a new component addLevel() that allows you to create kind of a map layout for your game
@@ -100,8 +100,64 @@ addLevel([
 * Finally == or xx being interchangeable as well represents a tile or the ground of your game which can be made into anything you want look wise as you can incorporate the ground tiles with sprites allowing you to make something like a grass block as the tile
 * In the tile component you can also assign te component "solid" to make it an actual existing ground that a body wouldn't fall through as they technically are just placeholders that take up the layout until you assign something to it
 
-X/X/X:
-* Text
+## 3/4/24:
+
+* Today I was continuing trying to create levels for my game which is the base for the whole game itself.
+* I watched many videos on how to use addLevel() to create my level but none of them worked and equated to the element "solid", "width", and "height" not being defined. I really didn't know the issue here as all the videos that used addLevel() had no issues like that.
+* I ended up searching up online "solid() not defined Kaboomjs" and got this [result](https://www.reddit.com/r/learnjavascript/comments/15t5d9b/kaboomjs_solid_is_not_defined/?rdt=54320) with a user online that has the same issue.
+* Apparently Kaboom recently came out with a [new version](https://kaboomjs.com/blog/3000) of their code: Kaboom3000 and with the addition of this new version they removed and added certain features specifically, removed the element solid() which caused my level to not work.
+```js
+addLevel([
+                "                          $",
+                "                          $",
+                "           $$         =   $",
+                "  %      ====         =   $",
+                "                      =    ",
+                "       ^^      = >    =   &",
+                "===========================",
+            ], {
+                // define the size of tile block
+                width: 32,
+                height: 32,
+                // define what each symbol means, by a function returning a component list (what will be passed to add())
+                tiles: {
+                    "=": () => [
+                        sprite("bean"),
+                        area(),
+                        solid()
+                    ]
+                }
+            })
+```
+
+```js
+addLevel([
+                "                          $",
+                "                          $",
+                "           $$         =   $",
+                "  %      ====         =   $",
+                "                      =    ",
+                "       ^^      = >    =   &",
+                "===========================",
+            ], {
+                // define the size of tile block
+                tileWidth: 32,
+                tileHeight: 32,
+                // define what each symbol means, by a function returning a component list (what will be passed to add())
+                tiles: {
+                    "=": () => [
+                        sprite("bean"),
+                        area(),
+                        body({ isStatic: true }),
+                    ]
+                }
+            })
+```
+* As you can see in the first set of code above everything is the same besides width, height, and solid compared to the 2nd set of code. This is because the component addLevel() and element solid are done differently and removed where you define height and width as tileheight/width and solid just being removed in general.
+
+* This was a big issue for a while because the documentation on kaboom still uses height, width, and solid for the component addLevel() and nowhere does it mention these elements being removed unless you check the blog section with updates concerning the new version of kaboom.
+* Now that I fixed a huge problem I have created a level and can use this important component to continue ith my full game.
+
 
 
 <!-- 

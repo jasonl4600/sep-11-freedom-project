@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <!-- CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        <link href="style.css" rel="stylesheet" type="text/css" />
+        
+        <title>Title</title>
+    </head>
+    <body>
+        <!-- HTML -->
+        <!-- JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script.js"></script>
+        <script type="module">
+
+            // import kaboom lib
+            import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
+            
+            // initialize kaboom context
+            kaboom();
+            
+            // add a piece of text at position (120, 80)
+            add([
+                text("hello"),
+                pos(120, 80),
+            ]);
+            loadSprite("bean", "sprites/bean.png")
+            addLevel([
+                "                          $",
+                "                          $",
+                "           $$         =   $",
+                "  %      ====         =   $",
+                "                      =    ",
+                "       ^^      = >    =   &",
+                "===========================",
+            ], {
+                // define the size of tile block
+                tileWidth: 32,
+                tileHeight: 32,
+                // define what each symbol means, by a function returning a component list (what will be passed to add())
+                tiles: {
+                    "=": () => [
+                        sprite("bean"),
+                        area(),
+                        body({ isStatic: true }),
+                    ]
+                }
+            })
+            
+            </script>
+    </body>
+</html>
