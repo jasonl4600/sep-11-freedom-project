@@ -140,10 +140,8 @@ addLevel([
                 "       ^^      = >    =   &",
                 "===========================",
             ], {
-                // define the size of tile block
                 tileWidth: 32,
                 tileHeight: 32,
-                // define what each symbol means, by a function returning a component list (what will be passed to add())
                 tiles: {
                     "=": () => [
                         sprite("bean"),
@@ -156,7 +154,37 @@ addLevel([
 * As you can see in the first set of code above everything is the same besides width, height, and solid compared to the 2nd set of code. This is because the component addLevel() and element solid are done differently and removed where you define height and width as tileheight/width and solid just being removed in general.
 
 * This was a big issue for a while because the documentation on kaboom still uses height, width, and solid for the component addLevel() and nowhere does it mention these elements being removed unless you check the blog section with updates concerning the new version of kaboom.
-* Now that I fixed a huge problem I have created a level and can use this important component to continue ith my full game.
+* Now that I fixed a huge problem I have created a level and can use this important component to continue with my full game.
+
+# 3/24/24:
+
+* Having my level now I have a solid platform that I my player can walk and interact with. Because now I can add sprites and objects onto the level I decided I should learn collisions next or just updates from touching other sprites in general
+
+* The first thing I wanted to try out was the element "update" specifically onUpdate meaning in the event such action is taken out the selected object would have the specific event in code outputted.
+
+```js
+player.onUpdate(() => {
+    if (player.isHovering()) {
+        player.color = rgb(0, 0, 255)
+    } else {
+        player.color = rgb()
+    }
+})
+```
+* This code above takes an existing global variable, "player" which is the sprite bean and uses a conditional to turn a event on and off which in this case is when the sprite is being hovered it will change into the hardcoded color and if it's not, the else statement will take place and give it no color (returning it to its original state).
+
+* Next I wanted to try a event/update that interacts one object with another.
+```js
+player.onCollide("enemy", (enemy) => {
+	destroy(enemy)
+})
+player.onCollideUpdate("enemy", () => {
+})
+```
+* This code is supposed to destroy the sprite with the tag enemy which is just bean2 in my sprites but I was given the error that destroy was not defined?
+* I'm still not sure towards why this is the case but I'm pretty sure it's because of the new Kaboom version as destroy is on the Kaboomjs website documentation but might not be on the new version.
+
+
 
 
 
