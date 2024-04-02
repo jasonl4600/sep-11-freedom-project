@@ -184,6 +184,41 @@ player.onCollideUpdate("enemy", () => {
 * This code is supposed to destroy the sprite with the tag enemy which is just bean2 in my sprites but I was given the error that destroy was not defined?
 * I'm still not sure towards why this is the case but I'm pretty sure it's because of the new Kaboom version as destroy is on the Kaboomjs website documentation but might not be on the new version.
 
+# 4/1/24
+
+* On last week's learning log I had an issue with the destroy function. 
+
+* What I wanted to happen was when the first sprite that is controllable collides with the stationary second sprite it should dissapear but the code was not defined.
+
+```js
+player.onCollide("enemy", (enemy) => {
+	destroy(enemy)
+})
+player.onCollideUpdate("enemy", () => {
+})
+```
+
+* Above is the old code while below is the new code that works:
+
+```js
+player.onCollide("bean2", (bean2) => {
+    destroy(bean2)
+})
+```
+
+* What I believe to be an issue was a error with syntax as you can see instead of destroy(enemy) it is destroy(bean2) which is the actual name of the sprite. I got confused with the "enemy" and (enemy) as I don't know if they're the same things or not. It turns out anything in quotes are tags basically variables you put when you add the specific object for example:
+
+```js
+ add([
+    sprite("bean2"),
+    pos(300, 40),
+    // Both objects must have area() component to enable collision detection between
+    area(),
+    body(),
+    "bean2"
+])
+```
+* "bean2" is the tag I have given it so it can be used throughout other functions as well.
 
 
 
