@@ -23,17 +23,20 @@
             
             // initialize kaboom context
             kaboom();
-            
- 
             const SPEED = 480
+
             setGravity(1000)
+
+            loadSprite("bean", "sprites/bean.png")
             loadSprite("bean2", "sprites/bean2.png")
+
             add([
                 sprite("bean2"),
-                pos(90, 40),
+                pos(300, 40),
                 // Both objects must have area() component to enable collision detection between
                 area(),
-                "enemy",
+                body(),
+                "bean2"
             ])
             const player = add([
                 sprite("bean"),
@@ -41,13 +44,7 @@
                 area(),
                 body(),
             ]);
-            player.onUpdate(() => {
-                if (player.isHovering()) {
-                    player.color = rgb(0, 0, 255)
-                } else {
-                    player.color = rgb()
-                }
-            })
+
             onKeyPress("space", () => {
                 if (player.isGrounded()) {
                     player.jump()
@@ -61,7 +58,18 @@
             onKeyDown("right", () => {
                 player.move(SPEED, 0)
             })
-            loadSprite("bean", "sprites/bean.png")
+
+            player.onUpdate(() => {
+                if (player.isHovering()) {
+                    player.color = rgb(255, 0, 255)
+                } else {
+                    player.color = rgb()
+                }
+            })
+            player.onCollide("bean2", (bean2) => {
+                destroy(bean2)
+            })
+
             addLevel([
                 "                          $",
                 "                          $",
