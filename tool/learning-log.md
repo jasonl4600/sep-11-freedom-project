@@ -220,7 +220,36 @@ player.onCollide("bean2", (bean2) => {
 ```
 * "bean2" is the tag I have given it so it can be used throughout other functions as well.
 
+# 4/7/24
 
+* Last week I was able to use the component destroy with oncollide
+
+* This week I made something using a for loop. You can really incorporate a lot of basic JS to Kaboom which usually involves spawning anything or repeating an action, event, or collision multiple times
+
+```js
+for (let i = 0; i < 10; i++) {
+
+                const x = rand(0, width())
+                const y = rand(0, height())
+
+                add([
+                    sprite("bean2"),
+                    pos(x, y),
+                    area(),
+                    body(),
+                    "bean2",
+                ])
+
+}
+```
+
+* I know I'll be using multiple enemies in my game so I used a for loop to spawn in a limited amount of the same sprite with the tag "bean2"
+
+* In the code above the elemtn rand is also used in order to spawn the enemies randomly
+
+* Some things I plan to work on next week based on what I have right now is figuring out how I can refresh this loop, basically when an enemy dies I want another one to spawn on the conditions of that loop.
+
+* Another thing I want to change is random x and y as I want it to be restricted on where the platform is so they don't spawn above the void or out of the map.
 
 
 <!-- 
