@@ -43,6 +43,7 @@
                 pos(80, 40),
                 area(),
                 body(),
+                health(8)
             ]);
 
             onKeyPress("space", () => {
@@ -69,7 +70,20 @@
             player.onCollide("bean2", (bean2) => {
                 destroy(bean2)
             })
+            for (let i = 0; i < 10; i++) {
 
+                const x = rand(0, width())
+                const y = rand(0, height())
+
+                add([
+                    sprite("bean2"),
+                    pos(x, y),
+                    area(),
+                    body(),
+                    "bean2",
+                ])
+
+}
             addLevel([
                 "                          $",
                 "                          $",
