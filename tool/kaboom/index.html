@@ -52,11 +52,11 @@
                 }
             })
 
-            onKeyDown("left", () => {
+            onKeyDown("a", () => {
                 player.move(-SPEED, 0)
             })
 
-            onKeyDown("right", () => {
+            onKeyDown("d", () => {
                 player.move(SPEED, 0)
             })
 
@@ -70,7 +70,8 @@
             player.onCollide("bean2", (bean2) => {
                 destroy(bean2)
             })
-            for (let i = 0; i < 10; i++) {
+            for (let i = 0; i < 300
+            ; i++) {
 
                 const x = rand(0, width())
                 const y = rand(0, height())
@@ -82,7 +83,7 @@
                     body(),
                     "bean2",
                 ])
-
+                
 }
             addLevel([
                 "                          $",
