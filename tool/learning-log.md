@@ -220,7 +220,7 @@ player.onCollide("bean2", (bean2) => {
 ```
 * "bean2" is the tag I have given it so it can be used throughout other functions as well.
 
-# 4/7/24
+# 4/14/24
 
 * Last week I was able to use the component destroy with oncollide
 
