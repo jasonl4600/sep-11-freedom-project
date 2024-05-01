@@ -29,6 +29,8 @@
 
             loadSprite("bean", "sprites/bean.png")
             loadSprite("bean2", "sprites/bean2.png")
+            loadSprite("ghosty", "sprites/ghosty.png")
+            loadSprite("steel", "sprites/steel.png")
 
             add([
                 sprite("bean2"),
@@ -67,31 +69,47 @@
                     player.color = rgb()
                 }
             })
-            player.onCollide("bean2", (bean2) => {
-                destroy(bean2)
+            player.onCollide("enemy", (enemy) => {
+                destroy(enemy)
             })
-            for (let i = 0; i < 300
+            for (let i = 0; i < 5
             ; i++) {
 
                 const x = rand(0, width())
                 const y = rand(0, height())
 
                 add([
-                    sprite("bean2"),
+                    sprite("ghosty"),
                     pos(x, y),
                     area(),
                     body(),
-                    "bean2",
+                    "enemy",
                 ])
                 
 }
             addLevel([
                 "                          $",
                 "                          $",
-                "           $$         =   $",
-                "  %      ====         =   $",
-                "                      =    ",
-                "       ^^      = >    =   &",
+                "                          $",
+                "                          $",
+                "                           ",
+                "                          &",
+                "                          &",
+                "                          &",
+                "                          &",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "        ^^                 ",
+                "        ===            =   ",
+                "                 >     =   ",
+                "                       =   ",
+                "                           ",
+                "                          ",
                 "===========================",
             ], {
                 // define the size of tile block
@@ -100,14 +118,20 @@
                 // define what each symbol means, by a function returning a component list (what will be passed to add())
                 tiles: {
                     "=": () => [
-                        sprite("bean"),
+                        sprite("steel"),
                         area(),
                         body({ isStatic: true }),
                     ]
                 }
             })
-
-            
+            const score = add([
+                text('0'),
+                pos(50, 50),
+                scale(3),
+                {
+                    value: 0,
+                }
+            ])          
             </script>
     </body>
 </html>
