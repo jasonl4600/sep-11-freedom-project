@@ -4,26 +4,141 @@
         <!-- Required meta tags -->
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" />
+        
+        <!-- CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" />
         <link href="style.css" rel="stylesheet" type="text/css" />
-        <style>
-            /* CSS */
-            
-        </style>
         
         <title>Title</title>
     </head>
     <body>
         <!-- HTML -->
-        
-        
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- <script src="script.js"></script> -->
-        <script>
-            // JS
+        <!-- JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="script.js"></script>
+        <script type="module">
+
+            // import kaboom lib
+            import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
             
+            // initialize kaboom context
+            kaboom();
+            const SPEED = 480
+
+            setGravity(1000)
+
+            loadSprite("bean", "sprites/bean.png")
+            loadSprite("bean2", "sprites/bean2.png")
+            loadSprite("ghosty", "sprites/ghosty.png")
+            loadSprite("steel", "sprites/steel.png")
+
+            add([
+                sprite("bean2"),
+                pos(300, 40),
+                // Both objects must have area() component to enable collision detection between
+                area(),
+                body(),
+                "bean2"
+            ])
+            const player = add([
+                sprite("bean"),
+                pos(80, 40),
+                area(),
+                body(),
+                health(8)
+            ]);
+
+            onKeyPress("space", () => {
+                if (player.isGrounded()) {
+                    player.jump()
+                }
+            })
+
+            onKeyDown("a", () => {
+                player.move(-SPEED, 0)
+            })
+
+            onKeyDown("d", () => {
+                player.move(SPEED, 0)
+            })
+
+            player.onUpdate(() => {
+                if (player.isHovering()) {
+                    player.color = rgb(255, 0, 255)
+                } else {
+                    player.color = rgb()
+                }
+            })
+            player.onCollide("enemy", (enemy) => {
+                destroy(enemy)
+            })
+            for (let i = 0; i < 5
+            ; i++) {
+
+                const x = rand(0, width())
+                const y = rand(0, height())
+
+                add([
+                    sprite("ghosty"),
+                    pos(x, y),
+                    area(),
+                    body(),
+                    "enemy",
+                ])
+                
+}
+            addLevel([
+                "                          $",
+                "                          $",
+                "                          $",
+                "                          $",
+                "                           ",
+                "                          &",
+                "                          &",
+                "                          &",
+                "                          &",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "                           ",
+                "        ^^                 ",
+                "        ===            =   ",
+                "                 >     =   ",
+                "                       =   ",
+                "                           ",
+                "                          ",
+                "===========================",
+            ], {
+                // define the size of tile block
+                tileWidth: 32,
+                tileHeight: 32,
+                // define what each symbol means, by a function returning a component list (what will be passed to add())
+                tiles: {
+                    "=": () => [
+                        sprite("steel"),
+                        area(),
+                        body({ isStatic: true }),
+                    ]
+                }
+            })
+            const score = add([
+                text('0'),
+                pos(50, 50),
+                scale(3),
+                {
+                    value: 0,
+                }
+            ])          
             
-        </script>
+            const new1 = add([
+                text('FP NOT DONE'),
+                pos(150, 50),
+                scale(4),
+
+            ])
+            </script>
     </body>
 </html>
