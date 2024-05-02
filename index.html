@@ -31,6 +31,7 @@
             loadSprite("bean2", "sprites/bean2.png")
             loadSprite("ghosty", "sprites/ghosty.png")
             loadSprite("steel", "sprites/steel.png")
+            loadSprite("bag", "sprites/bag.png")
 
             add([
                 sprite("bean2"),
@@ -40,13 +41,18 @@
                 body(),
                 "bean2"
             ])
+        
             const player = add([
                 sprite("bean"),
                 pos(80, 40),
                 area(),
                 body(),
                 health(8)
-            ]);
+            ])
+
+            player.onUpdate(() => {
+                camPos(player.pos)
+            })
 
             onKeyPress("space", () => {
                 if (player.isGrounded()) {
@@ -104,13 +110,13 @@
                 "                           ",
                 "                           ",
                 "                           ",
-                "        ^^                 ",
-                "        ===            =   ",
+                "        ^^             =   ",
+                "        = = =              ",
                 "                 >     =   ",
+                "                           ",
                 "                       =   ",
                 "                           ",
-                "                          ",
-                "===========================",
+                "= = = = = = = = = = = = = =",
             ], {
                 // define the size of tile block
                 tileWidth: 32,
@@ -139,6 +145,13 @@
                 scale(4),
 
             ])
+            // const projectile = add([
+            //     sprite("bag"),
+            //     pos(ghosty.pos),
+            //     area(),
+            //     move(player.pos.angle(ghosty.pos), 1200),
+            //     offscreen({ destroy: true }),
+            // ])
             </script>
     </body>
 </html>
