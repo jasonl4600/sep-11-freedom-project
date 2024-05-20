@@ -22,7 +22,9 @@
             import kaboom from "https://unpkg.com/kaboom@3000.0.1/dist/kaboom.mjs";
             
             // initialize kaboom context
-            kaboom();
+        kaboom({
+            //background: [255,0,0],
+        });
             const SPEED = 480
 
             setGravity(1000)
@@ -33,6 +35,15 @@
             loadSprite("steel", "sprites/steel.png")
             loadSprite("bag", "sprites/bag.png")
 
+            // Our win screen once conditions are met to win
+            // scene("win", () => {
+            //     add([
+            //         text("You Win!"),
+            //         pos(width() / 2, height() / 2),
+            //         anchor("center"),
+            //     ])
+            // })
+            
             add([
                 sprite("bean2"),
                 pos(300, 40),
@@ -44,12 +55,154 @@
         
             const player = add([
                 sprite("bean"),
-                pos(80, 40),
+                pos(40, 80),
                 area(),
                 body(),
                 health(8)
             ])
 
+            // player.onUpdate(() => {
+            //     camPos(player.pos)
+            // })
+
+            / onKeyPress("space", () => {
+            //     if (player.isGrounded()) {
+            //         player.jump()
+            //     }
+            // })
+
+            // onKeyDown("a", () => {
+            //     player.move(-SPEED, 0)
+            // })
+
+            // onKeyDown("d", () => {
+            //     player.move(SPEED, 0)
+            // })
+
+            // onKeyDown("s", () => {
+            //     player.move(0, SPEED)
+            // })
+
+            // onKeyDown("s", () => {
+            //     player.move(0, SPEED)
+            // })
+
+            player.onUpdate(() => {
+                if (player.isHovering()) {
+                    player.color = rgb(255, 0, 255)
+                } else {
+                    player.color = rgb()
+                }
+            })
+            // player.onCollide("enemy", (enemy) => {
+            //     destroy(enemy)
+            // })
+    
+            // for (let i = 0; i < 20; i++) {
+            //     const x = rand(0, width())
+            //     const y = rand(0, height()) 
+            //     add([
+            //         sprite("ghosty"),
+            //         pos(x, y),
+            //         area(),
+            //         body(),
+            //         "enemy",
+            //     ])
+            //  }
+             
+            // player.onCollide("enemy", (enemy) => {
+            //     go("win")
+            // })
+            // scene("Start", () => {
+            //     add([
+            //         text("Press space to start"),
+            //         pos(width() / 2, height() / 2),
+            //         anchor("center"),
+            //     ])
+            // })
+            // go("Start")
+            // onKeyPress("space", () => {
+            //     go("main",)
+            // })
+
+            scene("main", (levelIdx) => {
+            const levels = [
+                [
+                "                             ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "      = = = = = =            ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "= = = = = = = = = = = = = = =",
+                ],
+                [
+                "                             ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "      = = = = = =            ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "= = = = = = = = = = = = = = =",
+                ],
+                ]
+            
+            
+            addLevel(levels[levelIdx], {
+                tileWidth: 32,
+                tileHeight: 32,
+                tiles: {
+                    "=": () => [
+                        sprite("steel"),
+                        area(),
+                        body({ isStatic: true }),
+                    ]
+                }
+            })
+            for (let i = 0; i < 20; i++) {
+                const x = rand(0, width())
+                const y = rand(0, height()) 
+                add([
+                    sprite("ghosty"),
+                    pos(x, y),
+                    area(),
+                    body(),
+                    "enemy",
+                ])
+             }
+             const player = add([
+                sprite("bean"),
+                pos(40, 80),
+                area(),
+                body(),
+                health(8)
+            ])
+            player.onCollide("enemy", (enemy) => {
+                destroy(enemy)
+            })
+            player.onCollide("enemy", () => {
+                if (levelIdx + 1 < levels.length) {
+                    go("main", levelIdx + 1)
+                } else {
+                    go("win")
+                }
+            })
             player.onUpdate(() => {
                 camPos(player.pos)
             })
@@ -68,68 +221,21 @@
                 player.move(SPEED, 0)
             })
 
-            player.onUpdate(() => {
-                if (player.isHovering()) {
-                    player.color = rgb(255, 0, 255)
-                } else {
-                    player.color = rgb()
-                }
+            onKeyDown("s", () => {
+                player.move(0, SPEED)
             })
-            player.onCollide("enemy", (enemy) => {
-                destroy(enemy)
+
+            onKeyDown("s", () => {
+                player.move(0, SPEED)
             })
-            for (let i = 0; i < 5
-            ; i++) {
-
-                const x = rand(0, width())
-                const y = rand(0, height())
-
+            scene("win", () => {
                 add([
-                    sprite("ghosty"),
-                    pos(x, y),
-                    area(),
-                    body(),
-                    "enemy",
+                    text("You Win!"),
+                    pos(width() / 2, height() / 2),
+                    anchor("center"),
                 ])
-                
-}
-            addLevel([
-                "                          $",
-                "                          $",
-                "                          $",
-                "                          $",
-                "                           ",
-                "                          &",
-                "                          &",
-                "                          &",
-                "                          &",
-                "                           ",
-                "                           ",
-                "                           ",
-                "                           ",
-                "                           ",
-                "                           ",
-                "                           ",
-                "        ^^             =   ",
-                "        = = =              ",
-                "                 >     =   ",
-                "                           ",
-                "                       =   ",
-                "                           ",
-                "= = = = = = = = = = = = = =",
-            ], {
-                // define the size of tile block
-                tileWidth: 32,
-                tileHeight: 32,
-                // define what each symbol means, by a function returning a component list (what will be passed to add())
-                tiles: {
-                    "=": () => [
-                        sprite("steel"),
-                        area(),
-                        body({ isStatic: true }),
-                    ]
-                }
             })
+        })
             const score = add([
                 text('0'),
                 pos(50, 50),
@@ -143,15 +249,8 @@
                 text('FP NOT DONE'),
                 pos(150, 50),
                 scale(4),
-
             ])
-            // const projectile = add([
-            //     sprite("bag"),
-            //     pos(ghosty.pos),
-            //     area(),
-            //     move(player.pos.angle(ghosty.pos), 1200),
-            //     offscreen({ destroy: true }),
-            // ])
+            go("main", 0)
             </script>
     </body>
 </html>
