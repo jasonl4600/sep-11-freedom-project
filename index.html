@@ -38,6 +38,7 @@
             loadSprite("philostone", "sprites/philostone1.png")
             loadSprite("yowaimo1", "sprites/yowaimo1.png")
             loadSprite("wow", "sprites/wow.png")
+            loadSprite("sleepy02", "sprites/sleepy02.png")
             // Our win screen once conditions are met to win
             // scene("win", () => {
             //     add([
@@ -127,9 +128,7 @@
             // onKeyPress("space", () => {
             //     go("main",)
             // })
-
-            scene("main", (levelIdx) => {
-            const levels = [
+            const layout = [
                 [
                 "                             ",
                 "                             ",
@@ -139,9 +138,9 @@
                 "             @               ",
                 "=                            ",
                 "                             ",
-                "=                            ",
+                "=           * *              ",
                 "      = = = = = =            ",
-                "=                            ",
+                "=                        -   ",
                 "                             ",
                 "=                            ",
                 "                             ",
@@ -176,10 +175,10 @@
                 "                 @           ",
                 "=                            ",
                 "  = = = = = = = = =          ",
-                "=                            ",
+                "=                         -  ",
                 "                             ",
                 "=                            ",
-                "                             ",
+                "                              ",
                 "= = = = = = = = = = = = = = =",
                 ],
                 [
@@ -193,7 +192,7 @@
                 "                             ",
                 "=                            ",
                 "      = = = = = =            ",
-                "=                            ",
+                "=                         -  ",
                 "                             ",
                 "=                            ",
                 "                             ",
@@ -210,7 +209,7 @@
                 "                @            ",
                 "=                            ",
                 "      = = = = = =            ",
-                "=                            ",
+                "=                         -  ",
                 "                             ",
                 "=                            ",
                 "                             ",
@@ -227,15 +226,14 @@
                 "                   @         ",
                 "=                            ",
                 "      = = = = = =            ",
-                "=                            ",
+                "=                         -  ",
                 "                             ",
                 "=                            ",
                 "                             ",
                 "= = = = = = = = = = = = = = =",
                 ],
                 ]
-            
-            addLevel(levels[levelIdx], {
+            const mapItems =  {
                 tileWidth: 32,
                 tileHeight: 32,
                 tiles: {
@@ -252,12 +250,48 @@
                         scale(1/10),
                         body(),
                         "philostone",
-                    ]
-                }
-            })
+                    ],
+                    "*": () => [
+                        sprite("ghosty"),
+                        area(),
+                        body({ isStatic: true}),
+                        body(),
+                        "enemy",
+                    ],
+                    "-": () => [
+                        sprite("sleepy02"),
+                        area(),
+                        body({ isStatic: true}),
+                        "sleepy02",
+                        scale(0.2)
+                    ],
+                },
+            }
+            scene("game", ({level_id, kills} = {level_id: 0, coins: 0}) => {
+                const level = addLevel(layout[level_id ?? 0], mapItems)
+            // addLevel(levels[levelIdx], {
+            //     tileWidth: 32,
+            //     tileHeight: 32,
+            //     tiles: {
+            //         "=": () => [
+            //             sprite("steel"),
+            //             area(),
+            //             body({ isStatic: true }),
+            //             "steel",
+            //         ],
+            //         "@": () => [
+            //             sprite("philostone"),
+            //             area(),
+            //             body({ isStatic: true}),
+            //             scale(1/10),
+            //             body(),
+            //             "philostone",
+            //         ]
+            //     }
+            // })
             let enemy = add([
                     sprite("ghosty"),
-                    pos(100,100),
+                    pos(300,100),
                     area(),
                     body(),
                     anchor("center"),
@@ -285,7 +319,7 @@
                 scale(.8),
             ])
             
-            player.onCollide("enemy", (enemy) => {
+            player.onCollide("enemy", () => {
                 if(player.pos.y < enemy.pos.y){
                 destroy(enemy)
                 console.log(destroy(enemy))
@@ -298,17 +332,17 @@
                     destroy(player)
                 }
             })
-            player.onCollide("enemy", () => {
-                if(philostone){
-                    if (levelIdx + 1 < levels.length) {
-                        go("main", levelIdx + 1, {
+            player.onCollide("sleepy02", () => {
+               if(philostone){
+                    if (level_id + 1 < layout.length) {
+                        go("game",{
                             level_id: level_id + 1,
 				            kills: kills,
                         })
                     } else {
                         go("win")
                     }
-                }
+               }
             })
             let philostone = false
             player.onCollide("philostone", (key) => {
@@ -375,8 +409,6 @@
                     console.log(kills)
                 }
             })
-            let level_id = 0
-            let kills = 0
             const labels = add([
                 text('Level ' + level_id),
                 pos(0,0),
@@ -404,7 +436,7 @@
                 pos(150, 50),
                 scale(4),
             ])
-            go("main", 0)
+            go("game",)
             </script>
     </body>
 </html>
