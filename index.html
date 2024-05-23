@@ -23,7 +23,8 @@
             
             // initialize kaboom context
         kaboom({
-            //background: [255,0,0],
+            background: [89, 216, 255],
+            global: true,
         });
             const SPEED = 480
 
@@ -34,7 +35,9 @@
             loadSprite("ghosty", "sprites/ghosty.png")
             loadSprite("steel", "sprites/steel.png")
             loadSprite("bag", "sprites/bag.png")
-
+            loadSprite("philostone", "sprites/philostone1.png")
+            loadSprite("yowaimo1", "sprites/yowaimo1.png")
+            loadSprite("wow", "sprites/wow.png")
             // Our win screen once conditions are met to win
             // scene("win", () => {
             //     add([
@@ -65,7 +68,7 @@
             //     camPos(player.pos)
             // })
 
-            / onKeyPress("space", () => {
+            // onKeyPress("space", () => {
             //     if (player.isGrounded()) {
             //         player.jump()
             //     }
@@ -131,10 +134,62 @@
                 "                             ",
                 "                             ",
                 "=                            ",
+                "              xx             ",
+                "=                            ",
+                "             @               ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "      = = = = = =            ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "= = = = = = = = = = = = = = =",
+                ],
+                [
+                "=                            ",
+                "                             ",
+                "=                            ",
                 "                             ",
                 "=                            ",
                 "                             ",
                 "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                 @           ",
+                "=                            ",
+                "  = = = = = = = = =          ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "= = = = = = = = = = = = = = =",
+                ],
+                [
+                "                             ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                  @         ",
                 "                             ",
                 "=                            ",
                 "      = = = = = =            ",
@@ -152,7 +207,24 @@
                 "=                            ",
                 "                             ",
                 "=                            ",
+                "                @            ",
+                "=                            ",
+                "      = = = = = =            ",
+                "=                            ",
                 "                             ",
+                "=                            ",
+                "                             ",
+                "= = = = = = = = = = = = = = =",
+                ],
+                [
+                "                             ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                             ",
+                "=                            ",
+                "                   @         ",
                 "=                            ",
                 "      = = = = = =            ",
                 "=                            ",
@@ -163,7 +235,6 @@
                 ],
                 ]
             
-            
             addLevel(levels[levelIdx], {
                 tileWidth: 32,
                 tileHeight: 32,
@@ -172,41 +243,86 @@
                         sprite("steel"),
                         area(),
                         body({ isStatic: true }),
+                        "steel",
+                    ],
+                    "@": () => [
+                        sprite("philostone"),
+                        area(),
+                        body({ isStatic: true}),
+                        scale(1/10),
+                        body(),
+                        "philostone",
                     ]
                 }
             })
-            for (let i = 0; i < 20; i++) {
-                const x = rand(0, width())
-                const y = rand(0, height()) 
-                add([
+            let enemy = add([
                     sprite("ghosty"),
-                    pos(x, y),
+                    pos(100,100),
                     area(),
                     body(),
+                    anchor("center"),
                     "enemy",
                 ])
-             }
-             const player = add([
+            // for (let i = 0; i < 5; i++) {
+            //     const x = rand(0, width())
+            //     const y = rand(0, height()) 
+            //     let enemy = add([
+            //         sprite("ghosty"),
+            //         pos(x, y),
+            //         area(),
+            //         body(),
+            //         anchor("center"),
+            //         "enemy",
+            //     ])
+            //  }
+             let player = add([
                 sprite("bean"),
                 pos(40, 80),
                 area(),
                 body(),
-                health(8)
+                health(8),
+                anchor("center"),
+                scale(.8),
             ])
+            
             player.onCollide("enemy", (enemy) => {
+                if(player.pos.y < enemy.pos.y){
                 destroy(enemy)
-            })
-            player.onCollide("enemy", () => {
-                if (levelIdx + 1 < levels.length) {
-                    go("main", levelIdx + 1)
-                } else {
-                    go("win")
+                console.log(destroy(enemy))
+                kills++
+                scorelabel.text = 'Score ' + kills
+                player.jump(500)
+                }
+                else{
+                    go("lose")
+                    destroy(player)
                 }
             })
+            player.onCollide("enemy", () => {
+                if(philostone){
+                    if (levelIdx + 1 < levels.length) {
+                        go("main", levelIdx + 1, {
+                            level_id: level_id + 1,
+				            kills: kills,
+                        })
+                    } else {
+                        go("win")
+                    }
+                }
+            })
+            let philostone = false
+            player.onCollide("philostone", (key) => {
+                destroy(key)
+                philostone = true
+            })
+            console.log(philostone)
             player.onUpdate(() => {
                 camPos(player.pos)
+                if(player.pos.y >= 2400){
+                    go("lose")
+                }
             })
-
+           
             onKeyPress("space", () => {
                 if (player.isGrounded()) {
                     player.jump()
@@ -235,6 +351,44 @@
                     anchor("center"),
                 ])
             })
+            scene("lose", () => {
+                add([
+                    sprite("wow"),
+                    pos(-700,-150),
+                    area(),
+                    scale(1.5),
+                ])
+                add([
+                    text("You LOST"),
+                    color(255,0,0),
+                    pos(width() / 2, height() / 2),
+                    anchor("center"),
+                    scale(5)
+                ])
+                
+            })
+            player.onHeadbutt((obj) => {
+                if(obj.is("steel")){
+                    destroy(obj)
+                    kills++
+                    scorelabel.text = 'Score ' + kills
+                    console.log(kills)
+                }
+            })
+            let level_id = 0
+            let kills = 0
+            const labels = add([
+                text('Level ' + level_id),
+                pos(0,0),
+                fixed(),
+                scale(2),
+            ])
+            const scorelabel = add([
+                text('Score ' + kills),
+                pos(0,100),
+                fixed(),
+                scale(2),
+            ])
         })
             const score = add([
                 text('0'),
