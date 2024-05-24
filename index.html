@@ -24,11 +24,10 @@
             // initialize kaboom context
         kaboom({
             background: [89, 216, 255],
-            global: true,
         });
             const SPEED = 480
 
-            setGravity(1000)
+            setGravity(1300)
 
             loadSprite("bean", "sprites/bean.png")
             loadSprite("bean2", "sprites/bean2.png")
@@ -39,6 +38,13 @@
             loadSprite("yowaimo1", "sprites/yowaimo1.png")
             loadSprite("wow", "sprites/wow.png")
             loadSprite("sleepy02", "sprites/sleepy02.png")
+            loadSprite("grass", "sprites/grass.png")
+            loadSprite("owl", "sprites/owl.png")
+            loadSprite("etris", "sprites/etris.png")
+            loadSprite("savior", "sprites/savior.png")
+            loadSprite("02ing", "sprites/02ing.png")
+            loadSprite("layer2", "sprites/layer2.png")
+            loadSprite("klaris", "sprites/klaris.png")
             // Our win screen once conditions are met to win
             // scene("win", () => {
             //     add([
@@ -130,20 +136,26 @@
             // })
             const layout = [
                 [
+                "= = = = = = = = = = = = = = =",
                 "                             ",
+                "=                           =",
                 "                             ",
-                "=                            ",
-                "              xx             ",
-                "=                            ",
-                "             @               ",
-                "=                            ",
+                "=                           =",
                 "                             ",
-                "=           * *              ",
-                "      = = = = = =            ",
-                "=                        -   ",
+                "=            # # #          =",
                 "                             ",
-                "=                            ",
+                "=            # @ #          =",
                 "                             ",
+                "=            # # #          =",
+                "                             ",
+                "=                           =",
+                "                             ",
+                "=                           =",
+                "                             ",
+                "=                        -  =",
+                "              *   *          ",
+                "=                           =",
+                "          +  + +             ",
                 "= = = = = = = = = = = = = = =",
                 ],
                 [
@@ -169,12 +181,12 @@
                 "                             ",
                 "=                            ",
                 "                             ",
-                "=                            ",
-                "                             ",
+                "= = = = = = = = = = = = = = =",
+                "        !                    ",
                 "=                            ",
                 "                 @           ",
                 "=                            ",
-                "  = = = = = = = = =          ",
+                "                             ",
                 "=                         -  ",
                 "                             ",
                 "=                            ",
@@ -188,7 +200,7 @@
                 "                             ",
                 "=                            ",
                 "                             ",
-                "=                  @         ",
+                "=      $           @         ",
                 "                             ",
                 "=                            ",
                 "      = = = = = =            ",
@@ -205,7 +217,7 @@
                 "                             ",
                 "=                            ",
                 "                             ",
-                "=                            ",
+                "=        %                   ",
                 "                @            ",
                 "=                            ",
                 "      = = = = = =            ",
@@ -220,10 +232,10 @@
                 "                             ",
                 "=                            ",
                 "                             ",
+                "=          &                 ",
+                "           &                 ",
                 "=                            ",
-                "                             ",
-                "=                            ",
-                "                   @         ",
+                "         & &       @         ",
                 "=                            ",
                 "      = = = = = =            ",
                 "=                         -  ",
@@ -243,6 +255,12 @@
                         body({ isStatic: true }),
                         "steel",
                     ],
+                    "#": () => [
+                        sprite("grass"),
+                        area(),
+                        body({ isStatic: true }),
+                        "grass",
+                    ],
                     "@": () => [
                         sprite("philostone"),
                         area(),
@@ -252,22 +270,58 @@
                         "philostone",
                     ],
                     "*": () => [
-                        sprite("ghosty"),
+                        sprite("owl"),
                         area(),
                         body({ isStatic: true}),
                         body(),
+                        scale(0.1),
+                        "enemy",
+                    ],
+                    "!": () => [
+                        sprite("etris"),
+                        area(),
+                        body({ isStatic: true}),
+                        body(),
+                        scale(0.2),
+                        "enemy",
+                    ],
+                    "$": () => [
+                        sprite("savior"),
+                        area(),
+                        body({ isStatic: true}),
+                        body(),
+                        scale(0.5),
+                        "enemy",
+                    ],
+                    "%": () => [
+                        sprite("02ing"),
+                        area(),
+                        body({ isStatic: true}),
+                        body(),
+                        scale(0.3),
+                        "enemy",
+                    ],
+                    "&": () => [
+                        sprite("layer2"),
+                        area(),
+                        body({ isStatic: true}),
+                        body(),
+                        scale(0.1),
                         "enemy",
                     ],
                     "-": () => [
-                        sprite("sleepy02"),
+                        sprite("klaris"),
                         area(),
                         body({ isStatic: true}),
-                        "sleepy02",
+                        "klaris",
                         scale(0.2)
+                    ],
+                    "+": () => [
+                       
                     ],
                 },
             }
-            scene("game", ({level_id, kills} = {level_id: 0, coins: 0}) => {
+            scene("game", ({level_id, kills} = {level_id: 0, kills: 0}) => {
                 const level = addLevel(layout[level_id ?? 0], mapItems)
             // addLevel(levels[levelIdx], {
             //     tileWidth: 32,
@@ -289,14 +343,16 @@
             //         ]
             //     }
             // })
-            let enemy = add([
-                    sprite("ghosty"),
-                    pos(300,100),
-                    area(),
-                    body(),
-                    anchor("center"),
-                    "enemy",
-                ])
+            // let enemy = add([
+            //         sprite("ghosty"),
+            //         pos(300,100),
+            //         area(),
+            //         body(),
+            //         anchor("center"),
+            //         "enemy",
+            //     ])
+            const enemySpeed = 100
+            
             // for (let i = 0; i < 5; i++) {
             //     const x = rand(0, width())
             //     const y = rand(0, height()) 
@@ -311,28 +367,37 @@
             //  }
              let player = add([
                 sprite("bean"),
-                pos(40, 80),
+                pos(40, 100),
                 area(),
                 body(),
                 health(8),
                 anchor("center"),
                 scale(.8),
             ])
-            
-            player.onCollide("enemy", () => {
+            player.onCollide("enemy", (enemy) => {
                 if(player.pos.y < enemy.pos.y){
                 destroy(enemy)
                 console.log(destroy(enemy))
                 kills++
                 scorelabel.text = 'Score ' + kills
-                player.jump(500)
+                player.jump(800)
                 }
                 else{
                     go("lose")
                     destroy(player)
                 }
             })
-            player.onCollide("sleepy02", () => {
+            // player.onCollide("enemy", (e, col) => {
+            //     // if it's not from the top, die
+            //     if (!col.isBottom()) {
+            //         go("lose")
+            //     }
+            //     else{
+            //         player.jump(500)
+            //         destroy(enemy)
+            //     }
+            // })
+            player.onCollide("klaris", () => {
                if(philostone){
                     if (level_id + 1 < layout.length) {
                         go("game",{
@@ -402,7 +467,7 @@
                 
             })
             player.onHeadbutt((obj) => {
-                if(obj.is("steel")){
+                if(obj.is("grass")){
                     destroy(obj)
                     kills++
                     scorelabel.text = 'Score ' + kills
