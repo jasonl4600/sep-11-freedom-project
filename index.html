@@ -47,6 +47,7 @@
             loadSprite("klaris", "sprites/klaris.png")
             loadSprite("nair", "sprites/nair.png")
             loadSprite("kazotiey", "sprites/kazotiey.png")
+            loadSprite("sukuna", "sprites/sukuna.png")
             // Our win screen once conditions are met to win
             // scene("win", () => {
             //     add([
@@ -410,13 +411,13 @@
             //     ])
             //  }
              let player = add([
-                sprite("bean"),
+                sprite("sukuna"),
                 pos(60, 800),
                 area(),
                 body(),
                 health(8),
                 anchor("center"),
-                scale(.8),
+                scale(0.05),
             ])
             player.onCollide("enemy", (enemy) => {
                 if(player.pos.y < enemy.pos.y){
